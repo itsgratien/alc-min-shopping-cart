@@ -317,6 +317,33 @@
       uiCanInteract = () => {
         
       }
+      //
+      validateWithLuhn = (digits) => {
+        const input1=digits.input1;
+        const input2=digits.input2;
+        const input3=digits.input3;
+        const input4=digits.input4;
+        const cardNumber = input1.concat(input2, input3, input4);
+       const carray = new Array();
+       //loop
+       for(let i=0;i<cardNumber.length; i++){
+         carray[carray.length] = cardNumber.charCodeAt(i) - 48;
+       }
+       carray.reverse();
+       let sum = 0;
+       for(let i =0; i<carray.length; i++){
+         let tmp = carray[i];
+         if((i%2) !=0){
+           tmp+=2;
+           if(tmp > 9){
+             tmp -=9;
+           }
+         }
+         sum+=tmp;
+       }
+       console.log(sum);
+      }
+      //
       validateCardNumber = () => {
         const input=document.querySelectorAll('div[data-cc-digits] input');
         const target = {
@@ -326,6 +353,7 @@
           input4: input[3].value
         };
         detectCardType(target);
+        validateWithLuhn(target);
       }
       /**/
       displayCartTotal = ({results}) => {
